@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sistema de Controle de Notas</title>
+
+</head>
+
+<body>
+
+
+
+  <h1>Controle de Notas do Aluno</h1>
+
+
+
+  <form id="formNotas">
+
+    <div>
+
+      <label for="nomeAluno">Nome do Aluno:</label>
+
+      <input type="text" id="nomeAluno" required>
+
+    </div>
+
+    <br>
+
+
+
+    <div>
+
+      <label for="nota1">Nota 1:</label>
+
+      <input type="number" id="nota1" step="0.1" min="0" max="10" required>
+
+    </div>
+
+
+
+    <div>
+
+      <label for="nota2">Nota 2:</label>
+
+      <input type="number" id="nota2" step="0.1" min="0" max="10" required>
+
+    </div>
+
+
+
+    <div>
+
+      <label for="nota3">Nota 3:</label>
+
+      <input type="number" id="nota3" step="0.1" min="0" max="10" required>
+
+    </div>
+
+    <br>
+
+
+
+    <button type="button" onclick="calcularMedia()">Calcular Média</button>
+
+  </form>
+
+
+
+  <hr>
+
+
+
+  <h2>Resultado:</h2>
+
+  <div id="resultado">
+
+    </div>
+
+
+
+  <script>
+
+    function calcularMedia() {
+
+
+
+      const nome = document.getElementById('nomeAluno').value.trim();
+
+      const nota1Str = document.getElementById('nota1').value;
+
+      const nota2Str = document.getElementById('nota2').value;
+
+      const nota3Str = document.getElementById('nota3').value;
+
+      const resultadoDiv = document.getElementById('resultado');
+
+
+
+      if (!nome || !nota1Str || !nota2Str || !nota3Str) {
+
+        alert("Erro: Por favor, preencha todos os campos.");
+
+        resultadoDiv.innerHTML = '<p style="color: red;">🚨 Preencha todos os dados para realizar o cálculo.</p>';
+
+        return;
+
+      }
+
+
+
+      const nota1 = parseFloat(nota1Str);
+
+      const nota2 = parseFloat(nota2Str);
+
+      const nota3 = parseFloat(nota3Str);
+
+
+
+      if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || nota1 < 0 || nota1 > 10) {
+
+         alert("Erro: As notas devem ser números entre 0 e 10.");
+
+         resultadoDiv.innerHTML = '<p style="color: red;">🚨 Notas inválidas. Verifique se estão entre 0 e 10.</p>';
+
+         return;
+
+      }
+
+
+
+      const media = (nota1 + nota2 + nota3) / 3;
+
+
+
+      const mediaFormatada = media.toFixed(2);
+
+
+
+      let situacao = '';
+
+      let cor = 'black';
+
+
+
+      if (media < 4) {
+
+        situacao = 'Reprovado';
+
+        cor = 'red';
+
+      } else if (media < 6) {
+
+        situacao = 'Recuperação';
+
+        cor = 'orange';
+
+      } else {
+
+        situacao = 'Aprovado';
+
+        cor = 'green';
+
+      }
+
+
+
+      resultadoDiv.innerHTML = `
+
+        <p><strong>Nome:</strong> ${nome}</p>
+
+        <p><strong>Média Final:</strong> ${mediaFormatada}</p>
+
+        <p><strong>Situação:</strong> <span style="font-weight: bold; color: ${cor};">${situacao}</span></p>
+
+      `;
+
+    }
+
+  </script>
+
+
+
+</body>
+
+</html>
